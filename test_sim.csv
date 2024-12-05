@@ -1,0 +1,150 @@
+,KPI Name,Scenario 1 Value,Scenario 2 Value
+0,Occupation Rate.Solide.0,0.39714442926533094,
+1,Occupation Rate.Liquide.0,0.3746964177292046,
+2,Occupation Rate.Solide.1,0.3603995901639344,
+3,Occupation Rate.Liquide.1,0.3273091226472374,
+4,Total Ships by Type.E,247,
+5,Total Ships by Type.D,81,
+6,Total Ships by Type.A,87,
+7,Total Ships by Type.B,23,
+8,Total Ships by Type.C,82,
+9,Forced Departures,0,
+10,Cargo Volume.Liquide,7587.499999999999,
+11,Cargo Volume.Solide,7511.666666666665,
+12,Average KPIs.avg_berth_waiting_time,6:09,
+13,Average KPIs.avg_mc_waiting_time,1:02,
+14,Average KPIs.avg_waiting_time,7:12,
+15,Average KPIs.avg_storage_waiting_time,4:12,
+16,Average KPIs.avg_Port Operation,24:39,
+17,Average KPIs.avg_total_time,39:48,
+18,Max KPIs.max_berth_waiting_time,102:16,
+19,Max KPIs.max_mc_waiting_time,64:30,
+20,Max KPIs.max_waiting_time,102:16,
+21,Max KPIs.max_Port Operation,69:55,
+22,Max KPIs.max_total_time,129:54,
+23,Ship Type KPIs.E.avg_berth_waiting_time,6:43,
+24,Ship Type KPIs.E.avg_mc_waiting_time,1:01,
+25,Ship Type KPIs.E.avg_waiting_time,7:45,
+26,Ship Type KPIs.E.avg_Port Operation,21:04,
+27,Ship Type KPIs.E.avg_total_time,36:38,
+28,Ship Type KPIs.E.max_berth_waiting_time,95:21,
+29,Ship Type KPIs.E.max_mc_waiting_time,64:29,
+30,Ship Type KPIs.E.max_waiting_time,95:21,
+31,Ship Type KPIs.E.max_Port Operation,50:53,
+32,Ship Type KPIs.E.max_total_time,120:04,
+33,Ship Type KPIs.D.avg_berth_waiting_time,4:58,
+34,Ship Type KPIs.D.avg_mc_waiting_time,1:17,
+35,Ship Type KPIs.D.avg_waiting_time,6:16,
+36,Ship Type KPIs.D.avg_Port Operation,38:43,
+37,Ship Type KPIs.D.avg_total_time,52:33,
+38,Ship Type KPIs.D.max_berth_waiting_time,81:26,
+39,Ship Type KPIs.D.max_mc_waiting_time,58:29,
+40,Ship Type KPIs.D.max_waiting_time,81:26,
+41,Ship Type KPIs.D.max_Port Operation,69:55,
+42,Ship Type KPIs.D.max_total_time,129:54,
+43,Ship Type KPIs.A.avg_berth_waiting_time,8:22,
+44,Ship Type KPIs.A.avg_mc_waiting_time,0:43,
+45,Ship Type KPIs.A.avg_waiting_time,9:06,
+46,Ship Type KPIs.A.avg_Port Operation,16:37,
+47,Ship Type KPIs.A.avg_total_time,34:27,
+48,Ship Type KPIs.A.max_berth_waiting_time,102:16,
+49,Ship Type KPIs.A.max_mc_waiting_time,25:30,
+50,Ship Type KPIs.A.max_waiting_time,102:16,
+51,Ship Type KPIs.A.max_Port Operation,41:13,
+52,Ship Type KPIs.A.max_total_time,123:50,
+53,Ship Type KPIs.B.avg_berth_waiting_time,1:20,
+54,Ship Type KPIs.B.avg_mc_waiting_time,0:31,
+55,Ship Type KPIs.B.avg_waiting_time,1:52,
+56,Ship Type KPIs.B.avg_Port Operation,27:18,
+57,Ship Type KPIs.B.avg_total_time,36:52,
+58,Ship Type KPIs.B.max_berth_waiting_time,18:22,
+59,Ship Type KPIs.B.max_mc_waiting_time,7:30,
+60,Ship Type KPIs.B.max_waiting_time,18:22,
+61,Ship Type KPIs.B.max_Port Operation,45:51,
+62,Ship Type KPIs.B.max_total_time,60:27,
+63,Ship Type KPIs.C.avg_berth_waiting_time,4:37,
+64,Ship Type KPIs.C.avg_mc_waiting_time,1:17,
+65,Ship Type KPIs.C.avg_waiting_time,5:55,
+66,Ship Type KPIs.C.avg_Port Operation,29:17,
+67,Ship Type KPIs.C.avg_total_time,43:18,
+68,Ship Type KPIs.C.max_berth_waiting_time,47:56,
+69,Ship Type KPIs.C.max_mc_waiting_time,64:30,
+70,Ship Type KPIs.C.max_waiting_time,64:30,
+71,Ship Type KPIs.C.max_Port Operation,60:09,
+72,Ship Type KPIs.C.max_total_time,108:16,
+73,Average Storage,120873.71794871763,
+74,Average Ships in Queue,0.32211538461538464,
+75,Occupation Rate.Solide.0,,0.7308838038858531
+76,Occupation Rate.Liquide.0,,0.3790072859744991
+77,Occupation Rate.Liquide.1,,0.33374696417729205
+78,Total Ships by Type.A,,97
+79,Total Ships by Type.C,,85
+80,Total Ships by Type.B,,20
+81,Total Ships by Type.E,,249
+82,Total Ships by Type.D,,82
+83,Forced Departures,,0
+84,Cargo Volume.Liquide,,7655.333333333332
+85,Cargo Volume.Solide,,7707.5
+86,Average KPIs.avg_berth_waiting_time,,241:42
+87,Average KPIs.avg_mc_waiting_time,,1:27
+88,Average KPIs.avg_waiting_time,,243:09
+89,Average KPIs.avg_storage_waiting_time,,3:16
+90,Average KPIs.avg_Port Operation,,23:47
+91,Average KPIs.avg_total_time,,273:39
+92,Max KPIs.max_berth_waiting_time,,789:34
+93,Max KPIs.max_mc_waiting_time,,82:30
+94,Max KPIs.max_waiting_time,,789:34
+95,Max KPIs.max_Port Operation,,81:02
+96,Max KPIs.max_total_time,,802:04
+97,Ship Type KPIs.A.avg_berth_waiting_time,,389:43
+98,Ship Type KPIs.A.avg_mc_waiting_time,,1:28
+99,Ship Type KPIs.A.avg_waiting_time,,391:11
+100,Ship Type KPIs.A.avg_Port Operation,,15:23
+101,Ship Type KPIs.A.avg_total_time,,413:46
+102,Ship Type KPIs.A.max_berth_waiting_time,,641:02
+103,Ship Type KPIs.A.max_mc_waiting_time,,82:30
+104,Ship Type KPIs.A.max_waiting_time,,721:48
+105,Ship Type KPIs.A.max_Port Operation,,50:35
+106,Ship Type KPIs.A.max_total_time,,737:03
+107,Ship Type KPIs.C.avg_berth_waiting_time,,3:20
+108,Ship Type KPIs.C.avg_mc_waiting_time,,2:06
+109,Ship Type KPIs.C.avg_waiting_time,,5:26
+110,Ship Type KPIs.C.avg_Port Operation,,29:43
+111,Ship Type KPIs.C.avg_total_time,,43:32
+112,Ship Type KPIs.C.max_berth_waiting_time,,46:20
+113,Ship Type KPIs.C.max_mc_waiting_time,,58:30
+114,Ship Type KPIs.C.max_waiting_time,,103:13
+115,Ship Type KPIs.C.max_Port Operation,,57:37
+116,Ship Type KPIs.C.max_total_time,,134:52
+117,Ship Type KPIs.B.avg_berth_waiting_time,,5:01
+118,Ship Type KPIs.B.avg_mc_waiting_time,,3:54
+119,Ship Type KPIs.B.avg_waiting_time,,8:55
+120,Ship Type KPIs.B.avg_Port Operation,,25:13
+121,Ship Type KPIs.B.avg_total_time,,42:15
+122,Ship Type KPIs.B.max_berth_waiting_time,,39:00
+123,Ship Type KPIs.B.max_mc_waiting_time,,52:30
+124,Ship Type KPIs.B.max_waiting_time,,52:30
+125,Ship Type KPIs.B.max_Port Operation,,45:24
+126,Ship Type KPIs.B.max_total_time,,90:11
+127,Ship Type KPIs.E.avg_berth_waiting_time,,359:50
+128,Ship Type KPIs.E.avg_mc_waiting_time,,1:15
+129,Ship Type KPIs.E.avg_waiting_time,,361:06
+130,Ship Type KPIs.E.avg_Port Operation,,19:47
+131,Ship Type KPIs.E.avg_total_time,,388:44
+132,Ship Type KPIs.E.max_berth_waiting_time,,776:52
+133,Ship Type KPIs.E.max_mc_waiting_time,,69:00
+134,Ship Type KPIs.E.max_waiting_time,,776:52
+135,Ship Type KPIs.E.max_Port Operation,,50:22
+136,Ship Type KPIs.E.max_total_time,,802:04
+137,Ship Type KPIs.D.avg_berth_waiting_time,,6:00
+138,Ship Type KPIs.D.avg_mc_waiting_time,,0:46
+139,Ship Type KPIs.D.avg_waiting_time,,6:46
+140,Ship Type KPIs.D.avg_Port Operation,,39:23
+141,Ship Type KPIs.D.avg_total_time,,53:28
+142,Ship Type KPIs.D.max_berth_waiting_time,,86:41
+143,Ship Type KPIs.D.max_mc_waiting_time,,43:30
+144,Ship Type KPIs.D.max_waiting_time,,86:41
+145,Ship Type KPIs.D.max_Port Operation,,81:02
+146,Ship Type KPIs.D.max_total_time,,133:09
+147,Average Storage,,123809.30087390731
+148,Average Ships in Queue,,10.053930530164534

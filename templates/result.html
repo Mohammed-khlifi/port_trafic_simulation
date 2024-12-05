@@ -1,0 +1,503 @@
+<!-- templates/result.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulation Result</title>
+    <!-- Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <style>
+        .card-title {
+            font-size: 1.5rem;
+        }
+        .chart-container {
+            position: relative;
+            height: 40vh;
+            width: 80vw;
+        }
+    </style>
+</head>
+<body class="container mt-5">
+    <h1 class="mb-4">Simulation Results</h1>
+    
+    {% if result.error %}
+        <div class="alert alert-danger" role="alert">
+            <strong>Error:</strong> {{ result.error }}
+        </div>
+    {% else %}
+        <!-- Overall KPIs Section -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-header">Cargo Volume</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result.cargo_volume }}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-header">Forced Departures</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result.forced_departures }}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-header">Average Storage</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result.avg_storage }}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-danger mb-3">
+                    <div class="card-header">Average Ships in Queue</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ result['avg ships in queue'] }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cargo Loaded Section -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3>Cargo Loaded</h3>
+                {% if result.cargo_loaded %}
+                    <!-- If cargo_loaded is a list of strings -->
+                    <ul class="list-group">
+                        {% for cargo in result.cargo_loaded %}
+                            <li class="list-group-item">{{ cargo }}</li>
+                        {% endfor %}
+                    </ul>
+
+                    <!-- If cargo_loaded is a list of dictionaries with details -->
+                    <!-- Uncomment the below block and comment the above <ul> block if applicable -->
+                    {# 
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Cargo Type</th>
+                                <th>Quantity</th>
+                                <th>Additional Detail</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cargo in result.cargo_loaded %}
+                                <tr>
+                                    <td>{{ cargo.type }}</td>
+                                    <td>{{ cargo.quantity }}</td>
+                                    <td>{{ cargo.detail }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    #}
+                {% else %}
+                    <p>No cargo loaded data available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- KPI Charts Section -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Occupation Rate Over Time
+                    </div>
+                    <div class="card-body">
+                        <canvas id="occupationRateChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Total Ships by Type
+                    </div>
+                    <div class="card-body">
+                        <canvas id="totalShipsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Average KPIs Table -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3>Average KPIs</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>KPI</th>
+                            <th>Average Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for kpi, value in result.average_kpis.items() %}
+                            <tr>
+                                <td>{{ kpi.replace('_', ' ').title() }}</td>
+                                <td>{{ value }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Maximum KPIs Table -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3>Maximum KPIs</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>KPI</th>
+                            <th>Maximum Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for kpi, value in result.max_kpis.items() %}
+                            <tr>
+                                <td>{{ kpi.replace('_', ' ').title() }}</td>
+                                <td>{{ value }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Ship Type KPIs Section -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3>Ship Type KPIs</h3>
+                {% for ship_type, kpis in result.ship_type_kpis.items() %}
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Ship Type {{ ship_type }}
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>KPI</th>
+                                        <th>Average Value</th>
+                                        <th>Maximum Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Average Berth Waiting Time</td>
+                                        <td>{{ kpis.avg_berth_waiting_time }}</td>
+                                        <td>{{ kpis.max_berth_waiting_time }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average MC Waiting Time</td>
+                                        <td>{{ kpis.avg_mc_waiting_time }}</td>
+                                        <td>{{ kpis.max_mc_waiting_time }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Waiting Time</td>
+                                        <td>{{ kpis.avg_waiting_time }}</td>
+                                        <td>{{ kpis.max_waiting_time }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Port Operations</td>
+                                        <td>{{ kpis['avg_Port Operation'] }}</td>
+                                        <td>{{ kpis['max_Port Operation'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Total Time</td>
+                                        <td>{{ kpis.avg_total_time }}</td>
+                                        <td>{{ kpis.max_total_time }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Waiting Time Histogram -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3>Waiting Time Histogram</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="waitingTimeHistogram"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Time Histogram -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3>Total Time Histogram</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="totalTimeHistogram"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Queue Size Over Time Chart -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3>Queue Size Over Time</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="queueSizeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+    <a href="/" class="btn btn-link mt-4">Run Another Simulation</a>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Include Popper.js if needed -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    {% if not result.error %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Occupation Rate Chart
+            var ctx1 = document.getElementById('occupationRateChart').getContext('2d');
+            var occupationRateChart = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    
+                    datasets: [{
+                        label: 'Occupation Rate',
+                        data: {{ result.occupation_rate | tojson }},
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        fill: true,
+                        tension: 0.1,
+                        pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Occupation Rate Over Time'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    var value = context.parsed.y * 100;
+                                    return 'Occupation Rate: ' + value.toFixed(2) + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 1,
+                            ticks: {
+                                callback: function(value) {
+                                    return (value * 100).toFixed(2) + '%';
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Occupation Rate (%)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time Period'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Total Ships by Type Chart
+            var ctx2 = document.getElementById('totalShipsChart').getContext('2d');
+            var totalShipsChart = new Chart(ctx2, {
+                type: 'pie',
+                data: {
+                    labels: {{ result.total_ships_by_type.keys() | list | tojson }},
+                    datasets: [{
+                        data: {{ result.total_ships_by_type.values() | list | tojson }},
+                        backgroundColor: [
+                            '#007bff',
+                            '#dc3545',
+                            '#ffc107',
+                            '#28a745',
+                            '#6c757d'
+                        ],
+                        hoverBackgroundColor: [
+                            '#0056b3',
+                            '#c82333',
+                            '#e0a800',
+                            '#218838',
+                            '#5a6268'
+                        ]
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Total Ships by Type'
+                        }
+                    }
+                }
+            });
+
+            // Waiting Time Histogram
+            var ctxWaiting = document.getElementById('waitingTimeHistogram').getContext('2d');
+            var waitingTimeBins = {{ result.waiting_time_bins | tojson }};
+            var waitingTimeCounts = {{ result.waiting_time_counts | tojson }};
+            var binSizeWaiting = 10;
+            var waitingTimeLabels = waitingTimeBins.map(function(bin) { return bin + ' - ' + (bin + binSizeWaiting); });
+
+            var waitingTimeHistogram = new Chart(ctxWaiting, {
+                type: 'bar',
+                data: {
+                    labels: waitingTimeLabels,
+                    datasets: [{
+                        label: 'Frequency',
+                        data: waitingTimeCounts,
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Waiting Time Histogram'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Waiting Time Bins'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Frequency'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Total Time Histogram
+            var ctxTotal = document.getElementById('totalTimeHistogram').getContext('2d');
+            var totalTimeBins = {{ result.total_time_bins | tojson }};
+            var totalTimeCounts = {{ result.total_time_counts | tojson }};
+            var binSizeTotal = 20;
+            var totalTimeLabels = totalTimeBins.map(function(bin) { return bin + ' - ' + (bin + binSizeTotal); });
+
+            var totalTimeHistogram = new Chart(ctxTotal, {
+                type: 'bar',
+                data: {
+                    labels: totalTimeLabels,
+                    datasets: [{
+                        label: 'Frequency',
+                        data: totalTimeCounts,
+                        backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Total Time Histogram'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Total Time Bins'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Frequency'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Queue Size Over Time Chart
+            var ctxQueue = document.getElementById('queueSizeChart').getContext('2d');
+            var queueSizes = {{ result.queue_sizes_over_time | tojson }};
+            var timePeriods = Array.from({length: queueSizes.length}, (_, i) => i + 1);
+
+            var queueSizeChart = new Chart(ctxQueue, {
+                type: 'line',
+                data: {
+                    labels: timePeriods,
+                    datasets: [{
+                        label: 'Queue Size',
+                        data: queueSizes,
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        fill: true,
+                        tension: 0.1,
+                        pointBackgroundColor: 'rgba(255, 159, 64, 1)'
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Queue Size Over Time'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time Period'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            stepSize: 1,
+                            title: {
+                                display: true,
+                                text: 'Queue Size'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    {% endif %}
+</body>
+</html>
