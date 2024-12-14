@@ -1,0 +1,22 @@
+,0,0
+Cargo Volume,1500.8333333333333,1515.5
+Berth 0,0.16587925015179114,0.1303885853066181
+B tt,35:20,
+A tt,32:57,
+C tt,41:39,31:56
+D tt,38:52,43:03
+B wt,1:12,
+A wt,3:03,
+C wt,4:29,0:56
+D wt,4:58,0:00
+Average Ships in Queue,0.05454545454545454,0.019230769230769232
+avg_tempo_storage,40.75757575757577,39.942307692307686
+avg_berth_waiting_time,1:48,0:19
+avg_mc_waiting_time,0:36,0:17
+avg_waiting_time,2:24,0:36
+avg_storage_waiting_time,7:51,16:36
+avg_Port Operation,26:29,44:03
+avg_total_time,36:03,52:26
+max_waiting_time,26:35,8:23
+E tt,,73:19
+E wt,,0:45

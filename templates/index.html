@@ -1,23 +1,26 @@
-<!-- templates/index.html -->
+<!-- templates/index.html --> 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Port Traffic Simulation - Ship Input</title>
+    <title>Port Traffic Simulation - Input Details</title>
     <!-- Bootstrap CSS for styling -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <style>
-        .remove-ship-btn {
+        .remove-item-btn {
             margin-top: 32px;
         }
-        .ship-card {
+        .card-section {
             margin-bottom: 20px;
+        }
+        .ship-table th, .ship-table td {
+            vertical-align: middle;
         }
     </style>
 </head>
 <body class="container mt-5">
-    <h1 class="mb-4">Port Traffic Simulation - Ship Details</h1>
+    <h1 class="mb-4">Port Traffic Simulation - Input Details</h1>
     
     <!-- Display Flash Messages -->
     {% with messages = get_flashed_messages() %}
@@ -33,34 +36,44 @@
       {% endif %}
     {% endwith %}
     
-    <form action="{{ url_for('run_simulation_route') }}" method="POST" id="shipForm">
-        <div id="shipsContainer">
-            <div class="card ship-card">
+    <form action="{{ url_for('run_simulation_route') }}" method="POST" id="simulationForm">
+        
+        <!-- Products Section -->
+        <div id="productsContainer">
+            <!-- Product Template -->
+            <div class="card card-section product-card">
                 <div class="card-header">
-                    Ship 1
-                    <button type="button" class="close remove-ship-btn" aria-label="Close" onclick="removeShip(this)">
+                    Product 1
+                    <button type="button" class="close remove-item-btn" aria-label="Close" onclick="removeProduct(this)">
                       <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="card-body">
                     <div class="form-row">
-                        <!-- Ship Name/Type -->
-                        <div class="form-group col-md-3">
-                            <label for="product1_name">Ship Name/Type</label>
-                            <input type="text" class="form-control" id="product1_name" name="product1_name" placeholder="Enter ship name/type" required>
+                        <!-- Product Name -->
+                        <div class="form-group col-md-6">
+                            <label for="product1_name">Product Name</label>
+                            <input type="text" class="form-control" id="product1_name" name="product1_name" placeholder="Enter product name" required>
                         </div>
-                        <!-- Capacity -->
-                        <div class="form-group col-md-3">
-                            <label for="product1_capacity">Capacity</label>
-                            <input type="number" class="form-control" id="product1_capacity" name="product1_capacity" placeholder="Enter capacity" min="0" required>
+                        <!-- Number of Berths -->
+                        <div class="form-group col-md-6">
+                            <label for="product1_number_of_berths">Number of Berths</label>
+                            <input type="number" class="form-control" id="product1_number_of_berths" name="product1_number_of_berths" placeholder="Enter number of berths" min="0" required>
                         </div>
+                    </div>
+                    <div class="form-row">
                         <!-- Temporary Storage -->
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label for="product1_temporary_storage">Temporary Storage</label>
                             <input type="number" class="form-control" id="product1_temporary_storage" name="product1_temporary_storage" placeholder="Enter temporary storage" min="0" required>
                         </div>
+                        <!-- Production per Year -->
+                        <div class="form-group col-md-4">
+                            <label for="product1_production_per_year">Production per Year</label>
+                            <input type="number" class="form-control" id="product1_production_per_year" name="product1_production_per_year" placeholder="Enter production per year" min="0" required>
+                        </div>
                         <!-- Night Navigation -->
-                        <div class="form-group col-md-3 d-flex align-items-center">
+                        <div class="form-group col-md-4 d-flex align-items-center">
                             <div class="form-check mt-4">
                                 <input class="form-check-input" type="checkbox" id="product1_Night_navigation" name="product1_Night_navigation">
                                 <label class="form-check-label" for="product1_Night_navigation">
@@ -69,14 +82,52 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Ships Table for this Product -->
+                    <h5>Ships for this Product</h5>
+                    <table class="table table-bordered ship-table">
+                        <thead>
+                            <tr>
+                                <th>Ship Type</th>
+                                <th>Capacity</th>
+                                <th>Composition</th>
+                                <th>Loading Rate (T/h)</th>
+                                <th>LOA (m)</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ship_type in fixed_ship_types %}
+                            <tr>
+                                <td>{{ ship_type }}</td>
+                                <td>
+                                    <input type="number" class="form-control" name="product1_ship{{ ship_type }}_capacity" placeholder="Enter capacity" min="0" required>
+                                </td>
+                                <td>
+                                    <input type="number" step="0.1" class="form-control" name="product1_ship{{ ship_type }}_composition" placeholder="Enter composition" min="0" max="1" required>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" name="product1_ship{{ ship_type }}_loading_rate" placeholder="Enter loading rate" min="0" required>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" name="product1_ship{{ ship_type }}_loa" placeholder="Enter LOA" min="0" required>
+                                </td>
+                                <td>
+                                    <!-- Ships are fixed types; no action needed -->
+                                    N/A
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <!-- Add Ship Button -->
-        <button type="button" class="btn btn-secondary mb-4" onclick="addShip()">Add Another Ship</button>
+        <!-- Add Product Button -->
+        <button type="button" class="btn btn-primary mb-4" onclick="addProduct()">Add Another Product</button>
         
         <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary">Run Simulation</button>
+        <button type="submit" class="btn btn-success">Run Simulation</button>
     </form>
     
     <!-- Bootstrap JS and dependencies -->
@@ -87,59 +138,105 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     
     <script>
-        let shipCount = 1;
+        let productCount = 1;
 
-        function addShip() {
-            shipCount++;
-            const shipsContainer = document.getElementById('shipsContainer');
-
-            const shipCard = document.createElement('div');
-            shipCard.className = 'card ship-card';
-            shipCard.innerHTML = `
+        function addProduct() {
+            productCount++;
+            const productsContainer = document.getElementById('productsContainer');
+            
+            // Create new product card
+            const productCard = document.createElement('div');
+            productCard.className = 'card card-section product-card';
+            productCard.innerHTML = `
                 <div class="card-header">
-                    Ship ${shipCount}
-                    <button type="button" class="close remove-ship-btn" aria-label="Close" onclick="removeShip(this)">
+                    Product ${productCount}
+                    <button type="button" class="close remove-item-btn" aria-label="Close" onclick="removeProduct(this)">
                       <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="card-body">
                     <div class="form-row">
-                        <!-- Ship Name/Type -->
-                        <div class="form-group col-md-3">
-                            <label for="product${shipCount}_name">Ship Name/Type</label>
-                            <input type="text" class="form-control" id="product${shipCount}_name" name="product${shipCount}_name" placeholder="Enter ship name/type" required>
+                        <!-- Product Name -->
+                        <div class="form-group col-md-6">
+                            <label for="product${productCount}_name">Product Name</label>
+                            <input type="text" class="form-control" id="product${productCount}_name" name="product${productCount}_name" placeholder="Enter product name" required>
                         </div>
-                        <!-- Capacity -->
-                        <div class="form-group col-md-3">
-                            <label for="product${shipCount}_capacity">Capacity</label>
-                            <input type="number" class="form-control" id="product${shipCount}_capacity" name="product${shipCount}_capacity" placeholder="Enter capacity" min="0" required>
+                        <!-- Number of Berths -->
+                        <div class="form-group col-md-6">
+                            <label for="product${productCount}_number_of_berths">Number of Berths</label>
+                            <input type="number" class="form-control" id="product${productCount}_number_of_berths" name="product${productCount}_number_of_berths" placeholder="Enter number of berths" min="0" required>
                         </div>
+                    </div>
+                    <div class="form-row">
                         <!-- Temporary Storage -->
-                        <div class="form-group col-md-3">
-                            <label for="product${shipCount}_temporary_storage">Temporary Storage</label>
-                            <input type="number" class="form-control" id="product${shipCount}_temporary_storage" name="product${shipCount}_temporary_storage" placeholder="Enter temporary storage" min="0" required>
+                        <div class="form-group col-md-4">
+                            <label for="product${productCount}_temporary_storage">Temporary Storage</label>
+                            <input type="number" class="form-control" id="product${productCount}_temporary_storage" name="product${productCount}_temporary_storage" placeholder="Enter temporary storage" min="0" required>
+                        </div>
+                        <!-- Production per Year -->
+                        <div class="form-group col-md-4">
+                            <label for="product${productCount}_production_per_year">Production per Year</label>
+                            <input type="number" class="form-control" id="product${productCount}_production_per_year" name="product${productCount}_production_per_year" placeholder="Enter production per year" min="0" required>
                         </div>
                         <!-- Night Navigation -->
-                        <div class="form-group col-md-3 d-flex align-items-center">
+                        <div class="form-group col-md-4 d-flex align-items-center">
                             <div class="form-check mt-4">
-                                <input class="form-check-input" type="checkbox" id="product${shipCount}_Night_navigation" name="product${shipCount}_Night_navigation">
-                                <label class="form-check-label" for="product${shipCount}_Night_navigation">
+                                <input class="form-check-input" type="checkbox" id="product${productCount}_Night_navigation" name="product${productCount}_Night_navigation">
+                                <label class="form-check-label" for="product${productCount}_Night_navigation">
                                     Night Navigation
                                 </label>
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Ships Table for this Product -->
+                    <h5>Ships for this Product</h5>
+                    <table class="table table-bordered ship-table">
+                        <thead>
+                            <tr>
+                                <th>Ship Type</th>
+                                <th>Capacity</th>
+                                <th>Composition</th>
+                                <th>Loading Rate (T/h)</th>
+                                <th>LOA (m)</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ship_type in fixed_ship_types %}
+                            <tr>
+                                <td>{{ ship_type }}</td>
+                                <td>
+                                    <input type="number" class="form-control" name="product${productCount}_ship{{ ship_type }}_capacity" placeholder="Enter capacity" min="0" required>
+                                </td>
+                                <td>
+                                    <input type="number" step="0.1" class="form-control" name="product${productCount}_ship{{ ship_type }}_composition" placeholder="Enter composition" min="0" max="1" required>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" name="product${productCount}_ship{{ ship_type }}_loading_rate" placeholder="Enter loading rate" min="0" required>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" name="product${productCount}_ship{{ ship_type }}_loa" placeholder="Enter LOA" min="0" required>
+                                </td>
+                                <td>
+                                    <!-- Ships are fixed types; no action needed -->
+                                    N/A
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             `;
-            shipsContainer.appendChild(shipCard);
+            productsContainer.appendChild(productCard);
         }
 
-        function removeShip(button) {
-            if (shipCount > 1) {
-                shipCount--;
-                button.closest('.ship-card').remove();
+        function removeProduct(button) {
+            if (productCount > 1) {
+                productCount--;
+                button.closest('.product-card').remove();
             } else {
-                alert("At least one ship is required.");
+                alert("At least one product is required.");
             }
         }
     </script>
