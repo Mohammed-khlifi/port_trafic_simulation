@@ -75,29 +75,6 @@
                             <li class="list-group-item">{{ cargo }}</li>
                         {% endfor %}
                     </ul>
-
-                    <!-- If cargo_loaded is a list of dictionaries with details -->
-                    <!-- Uncomment the below block and comment the above <ul> block if applicable -->
-                    {# 
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Cargo Type</th>
-                                <th>Quantity</th>
-                                <th>Additional Detail</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for cargo in result.cargo_loaded %}
-                                <tr>
-                                    <td>{{ cargo.type }}</td>
-                                    <td>{{ cargo.quantity }}</td>
-                                    <td>{{ cargo.detail }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    #}
                 {% else %}
                     <p>No cargo loaded data available.</p>
                 {% endif %}
@@ -262,6 +239,24 @@
             </div>
         </div>
 
+        <!-- Download Results Section -->
+        <!-- Button to Download as PDF -->
+        <div class="no-print text-center mt-4">
+            <button class="btn btn-primary" onclick="window.print();">Download as PDF</button>
+        </div>
+        <!-- Download CSV Section -->
+        <div class="row mb-4">
+            <div class="col-md-12 text-center">
+                <h3>Download Simulation Results</h3>
+                <p>Click the button below to download the simulation results as a CSV file.</p>
+                <a href="{{ url_for('download_results') }}" class="btn btn-primary">Download Results as CSV</a>
+            </div>
+        </div>
+
+        <!-- Bootstrap JS and dependencies -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+
     {% endif %}
 
     <a href="/" class="btn btn-link mt-4">Run Another Simulation</a>
@@ -279,7 +274,6 @@
             var occupationRateChart = new Chart(ctx1, {
                 type: 'line',
                 data: {
-                    
                     datasets: [{
                         label: 'Occupation Rate',
                         data: {{ result.occupation_rate | tojson }},
