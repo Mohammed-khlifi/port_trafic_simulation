@@ -1,4 +1,4 @@
-<!-- templates/index.html --> 
+<!-- templates/index.html -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +28,7 @@
         {% for message in messages %}
           <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close remove-item-btn" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -62,18 +62,23 @@
                         </div>
                     </div>
                     <div class="form-row">
+                        <!-- Product Type -->
+                        <div class="form-group col-md-3">
+                            <label for="product1_type">Product Type</label>
+                            <input type="text" class="form-control" id="product1_type" name="product1_type" placeholder="Enter product type (e.g., solid, liquid, container)" required>
+                        </div>
                         <!-- Temporary Storage -->
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label for="product1_temporary_storage">Temporary Storage</label>
                             <input type="number" class="form-control" id="product1_temporary_storage" name="product1_temporary_storage" placeholder="Enter temporary storage" min="0" required>
                         </div>
                         <!-- Production per Year -->
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label for="product1_production_per_year">Production per Year</label>
                             <input type="number" class="form-control" id="product1_production_per_year" name="product1_production_per_year" placeholder="Enter production per year" min="0" required>
                         </div>
                         <!-- Night Navigation -->
-                        <div class="form-group col-md-4 d-flex align-items-center">
+                        <div class="form-group col-md-3 d-flex align-items-center">
                             <div class="form-check mt-4">
                                 <input class="form-check-input" type="checkbox" id="product1_Night_navigation" name="product1_Night_navigation">
                                 <label class="form-check-label" for="product1_Night_navigation">
@@ -132,9 +137,7 @@
     
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <!-- Include Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <!-- Include Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     
     <script>
@@ -149,7 +152,7 @@
             productCard.className = 'card card-section product-card';
             productCard.innerHTML = `
                 <div class="card-header">
-                    Product ${productCount}
+                    Product ` + productCount + `
                     <button type="button" class="close remove-item-btn" aria-label="Close" onclick="removeProduct(this)">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -158,31 +161,36 @@
                     <div class="form-row">
                         <!-- Product Name -->
                         <div class="form-group col-md-6">
-                            <label for="product${productCount}_name">Product Name</label>
-                            <input type="text" class="form-control" id="product${productCount}_name" name="product${productCount}_name" placeholder="Enter product name" required>
+                            <label for="product` + productCount + `_name">Product Name</label>
+                            <input type="text" class="form-control" id="product` + productCount + `_name" name="product` + productCount + `_name" placeholder="Enter product name" required>
                         </div>
                         <!-- Number of Berths -->
                         <div class="form-group col-md-6">
-                            <label for="product${productCount}_number_of_berths">Number of Berths</label>
-                            <input type="number" class="form-control" id="product${productCount}_number_of_berths" name="product${productCount}_number_of_berths" placeholder="Enter number of berths" min="0" required>
+                            <label for="product` + productCount + `_number_of_berths">Number of Berths</label>
+                            <input type="number" class="form-control" id="product` + productCount + `_number_of_berths" name="product` + productCount + `_number_of_berths" placeholder="Enter number of berths" min="0" required>
                         </div>
                     </div>
                     <div class="form-row">
+                        <!-- Product Type -->
+                        <div class="form-group col-md-3">
+                            <label for="product` + productCount + `_type">Product Type</label>
+                            <input type="text" class="form-control" id="product` + productCount + `_type" name="product` + productCount + `_type" placeholder="Enter product type (e.g., solid, liquid, container)" required>
+                        </div>
                         <!-- Temporary Storage -->
-                        <div class="form-group col-md-4">
-                            <label for="product${productCount}_temporary_storage">Temporary Storage</label>
-                            <input type="number" class="form-control" id="product${productCount}_temporary_storage" name="product${productCount}_temporary_storage" placeholder="Enter temporary storage" min="0" required>
+                        <div class="form-group col-md-3">
+                            <label for="product` + productCount + `_temporary_storage">Temporary Storage</label>
+                            <input type="number" class="form-control" id="product` + productCount + `_temporary_storage" name="product` + productCount + `_temporary_storage" placeholder="Enter temporary storage" min="0" required>
                         </div>
                         <!-- Production per Year -->
-                        <div class="form-group col-md-4">
-                            <label for="product${productCount}_production_per_year">Production per Year</label>
-                            <input type="number" class="form-control" id="product${productCount}_production_per_year" name="product${productCount}_production_per_year" placeholder="Enter production per year" min="0" required>
+                        <div class="form-group col-md-3">
+                            <label for="product` + productCount + `_production_per_year">Production per Year</label>
+                            <input type="number" class="form-control" id="product` + productCount + `_production_per_year" name="product` + productCount + `_production_per_year" placeholder="Enter production per year" min="0" required>
                         </div>
                         <!-- Night Navigation -->
-                        <div class="form-group col-md-4 d-flex align-items-center">
+                        <div class="form-group col-md-3 d-flex align-items-center">
                             <div class="form-check mt-4">
-                                <input class="form-check-input" type="checkbox" id="product${productCount}_Night_navigation" name="product${productCount}_Night_navigation">
-                                <label class="form-check-label" for="product${productCount}_Night_navigation">
+                                <input class="form-check-input" type="checkbox" id="product` + productCount + `_Night_navigation" name="product` + productCount + `_Night_navigation">
+                                <label class="form-check-label" for="product` + productCount + `_Night_navigation">
                                     Night Navigation
                                 </label>
                             </div>
@@ -207,16 +215,16 @@
                             <tr>
                                 <td>{{ ship_type }}</td>
                                 <td>
-                                    <input type="number" class="form-control" name="product${productCount}_ship{{ ship_type }}_capacity" placeholder="Enter capacity" min="0" required>
+                                    <input type="number" class="form-control" name="product` + productCount + `_ship{{ ship_type }}_capacity" placeholder="Enter capacity" min="0" required>
                                 </td>
                                 <td>
-                                    <input type="number" step="0.1" class="form-control" name="product${productCount}_ship{{ ship_type }}_composition" placeholder="Enter composition" min="0" max="1" required>
+                                    <input type="number" step="0.1" class="form-control" name="product` + productCount + `_ship{{ ship_type }}_composition" placeholder="Enter composition" min="0" max="1" required>
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control" name="product${productCount}_ship{{ ship_type }}_loading_rate" placeholder="Enter loading rate" min="0" required>
+                                    <input type="number" class="form-control" name="product` + productCount + `_ship{{ ship_type }}_loading_rate" placeholder="Enter loading rate" min="0" required>
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control" name="product${productCount}_ship{{ ship_type }}_loa" placeholder="Enter LOA" min="0" required>
+                                    <input type="number" class="form-control" name="product` + productCount + `_ship{{ ship_type }}_loa" placeholder="Enter LOA" min="0" required>
                                 </td>
                                 <td>
                                     <!-- Ships are fixed types; no action needed -->
